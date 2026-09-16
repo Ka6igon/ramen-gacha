@@ -6,21 +6,12 @@
   <meta name="theme-color" content="#be2026">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" cont<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#be2026">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="RAMEN GACHA">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon.svg">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* iPhoneでは操作ボタンを一列ずつ大きく表示する */
     .gacha-symbol { font-size: 32px; line-height: 1; margin-bottom: 4px; }
     .data-tools > div { flex-direction: column; }
     .data-tools > div > .secondary { width: 100%; }
@@ -36,86 +27,22 @@
       <div class="stats-grid"><article class="stat-card visited"><b id="home-visited">0</b><span>訪問済み</span></article><article class="stat-card unvisited"><b id="home-unvisited">0</b><span>行きたい</span></article></div>
       <div class="card action-card"><div><strong>お店を地図に追加</strong><p>ピンを置いて、次の一杯を記録。</p></div><button class="secondary" data-nav="map">地図を開く</button></div>
     </section>
-
     <section id="map" class="screen" aria-labelledby="map-title">
       <div class="screen-heading"><div><p class="eyebrow">RAMEN MAP</p><h2 id="map-title">お店の地図</h2></div><button id="locate-btn" class="icon-button" aria-label="現在地を表示">◎</button></div>
-      <p class="hint">地図をタップしてお店の位置を選択できます。</p>
-      <div id="leaflet-map" aria-label="ラーメン店の地図"></div>
-      <button id="add-shop-btn" class="primary floating">＋ お店を登録</button>
-      <div class="legend"><span><i class="dot red"></i>訪問済み</span><span><i class="dot green"></i>未訪問</span></div>
+      <p class="hint">地図をタップしてお店の位置を選択できます。</p><div id="leaflet-map" aria-label="ラーメン店の地図"></div><button id="add-shop-btn" class="primary floating">＋ お店を登録</button><div class="legend"><span><i class="dot red"></i>訪問済み</span><span><i class="dot green"></i>未訪問</span></div>
     </section>
-
     <section id="gacha" class="screen" aria-labelledby="gacha-title">
-      <div class="screen-heading"><div><p class="eyebrow">TODAY'S BOWL</p><h2 id="gacha-title">ラーメンガチャ</h2></div></div>
-      <div class="filter-group" role="radiogroup" aria-label="ガチャ対象"><button class="filter active" data-filter="all">全店舗</button><button class="filter" data-filter="visited">訪問済み</button><button class="filter" data-filter="unvisited">未訪問</button></div>
-      <div class="gacha-machine"><span class="gacha-symbol" aria-hidden="true">🎰</span><p class="machine-label">TODAY'S RAMEN</p><div id="slot-name" class="slot-name">お店を選ぼう</div><div id="slot-status" class="slot-status">ガチャ対象を選択してください</div></div>
-      <button id="spin-btn" class="primary large spin">🍜 ガチャを回す</button>
-      <button id="result-map-btn" class="text-button hidden">このお店を地図で見る →</button>
-      <p id="gacha-message" class="message" role="status"></p>
+      <div class="screen-heading"><div><p class="eyebrow">TODAY'S BOWL</p><h2 id="gacha-title">ラーメンガチャ</h2></div></div><div class="filter-group" role="radiogroup" aria-label="ガチャ対象"><button class="filter active" data-filter="all">全店舗</button><button class="filter" data-filter="visited">訪問済み</button><button class="filter" data-filter="unvisited">未訪問</button></div>
+      <div class="gacha-machine"><span class="gacha-symbol" aria-hidden="true">🎰</span><p class="machine-label">TODAY'S RAMEN</p><div id="slot-name" class="slot-name">お店を選ぼう</div><div id="slot-status" class="slot-status">ガチャ対象を選択してください</div></div><button id="spin-btn" class="primary large spin">🍜 ガチャを回す</button><button id="result-map-btn" class="text-button hidden">このお店を地図で見る →</button><p id="gacha-message" class="message" role="status"></p>
     </section>
-
     <section id="records" class="screen" aria-labelledby="records-title">
-      <div class="screen-heading"><div><p class="eyebrow">MY RECORDS</p><h2 id="records-title">記録</h2></div></div>
-      <div class="stats-grid"><article class="stat-card unvisited"><b id="record-unvisited">0</b><span>行きたいお店</span></article><article class="stat-card visited"><b id="record-year">0</b><span>今年の訪問</span></article></div>
-      <div class="list-section"><h3>訪問済み</h3><div id="visited-list" class="shop-list"></div></div>
-      <div class="list-section"><h3>行きたいお店</h3><div id="unvisited-list" class="shop-list"></div></div>
-      <div class="data-tools card"><h3>データ移行</h3><p>写真を含むすべての記録をJSONで保存・復元できます。</p><div><button id="export-btn" class="secondary">エクスポート</button><label class="secondary file-label">インポート<input id="import-input" type="file" accept="application/json,.json"></label></div></div>
+      <div class="screen-heading"><div><p class="eyebrow">MY RECORDS</p><h2 id="records-title">記録</h2></div></div><div class="stats-grid"><article class="stat-card unvisited"><b id="record-unvisited">0</b><span>行きたいお店</span></article><article class="stat-card visited"><b id="record-year">0</b><span>今年の訪問</span></article></div>
+      <div class="list-section"><h3>訪問済み</h3><div id="visited-list" class="shop-list"></div></div><div class="list-section"><h3>行きたいお店</h3><div id="unvisited-list" class="shop-list"></div></div><div class="data-tools card"><h3>データ移行</h3><p>写真を含むすべての記録をJSONで保存・復元できます。</p><div><button id="export-btn" class="secondary">エクスポート</button><label class="secondary file-label">インポート<input id="import-input" type="file" accept="application/json,.json"></label></div></div>
     </section>
   </main>
   <nav class="bottom-nav" aria-label="メインナビゲーション"><button class="nav-item active" data-nav="home"><span>⌂</span>ホーム</button><button class="nav-item" data-nav="map"><span>⌖</span>地図</button><button class="nav-item" data-nav="gacha"><span>◉</span>ガチャ</button><button class="nav-item" data-nav="records"><span>▤</span>記録</button></nav>
-
   <dialog id="shop-dialog"><form id="shop-form" method="dialog"><div class="modal-head"><h2 id="form-title">お店を登録</h2><button type="button" class="close" data-close="shop-dialog" aria-label="閉じる">×</button></div><input id="shop-id" type="hidden"><input id="shop-lat" type="hidden"><input id="shop-lng" type="hidden"><label>店名 <input id="shop-name" required maxlength="80" placeholder="例：らぁ麺 〇〇"></label><fieldset><legend>ステータス</legend><div class="status-choice"><label><input type="radio" name="status" value="unvisited" checked> 行きたい</label><label><input type="radio" name="status" value="visited"> 訪問済み</label></div></fieldset><div id="visit-fields" class="hidden"><label>訪問日 <input id="shop-date" type="date"></label><label>食べたメニュー <input id="shop-menu" maxlength="80" placeholder="例：特製醤油らぁ麺"></label></div><label>ラーメン写真 <input id="shop-photo" type="file" accept="image/*"></label><img id="photo-preview" class="photo-preview hidden" alt="選択した写真のプレビュー"><p id="position-note" class="position-note">地図をタップして位置を選択してください。</p><p id="form-error" class="form-error" role="alert"></p><button class="primary large" type="submit">保存する</button></form></dialog>
   <dialog id="detail-dialog"><div class="modal-head"><h2 id="detail-name"></h2><button class="close" data-close="detail-dialog" aria-label="閉じる">×</button></div><img id="detail-photo" class="detail-photo hidden" alt="ラーメン写真"><div id="detail-content"></div><div class="modal-actions"><button id="convert-btn" class="primary hidden">訪問済みにする</button><button id="edit-btn" class="secondary">編集</button><button id="delete-btn" class="danger">削除</button></div></dialog>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
-ent="RAMEN GACHA">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon.svg">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css">
-  <title>RAMEN GACHA</title>
-</head>
-<body>
-  <header class="topbar"><span class="brand-mark">🍜</span><h1>RAMEN GACHA</h1><span class="topbar-note">MY RAMEN MAP</span></header>
-  <main>
-    <section id="home" class="screen active" aria-labelledby="home-title">
-      <div class="hero"><p>今日、どの一杯にする？</p><h2 id="home-title">ラーメンを、<br>運にまかせよう。</h2><button class="primary large" data-nav="gacha">今日の一杯を引く <span>→</span></button></div>
-      <div class="stats-grid"><article class="stat-card visited"><b id="home-visited">0</b><span>訪問済み</span></article><article class="stat-card unvisited"><b id="home-unvisited">0</b><span>行きたい</span></article></div>
-      <div class="card action-card"><div><strong>お店を地図に追加</strong><p>ピンを置いて、次の一杯を記録。</p></div><button class="secondary" data-nav="map">地図を開く</button></div>
-    </section>
-
-    <section id="map" class="screen" aria-labelledby="map-title">
-      <div class="screen-heading"><div><p class="eyebrow">RAMEN MAP</p><h2 id="map-title">お店の地図</h2></div><button id="locate-btn" class="icon-button" aria-label="現在地を表示">◎</button></div>
-      <p class="hint">地図をタップしてお店の位置を選択できます。</p>
-      <div id="leaflet-map" aria-label="ラーメン店の地図"></div>
-      <button id="add-shop-btn" class="primary floating">＋ お店を登録</button>
-      <div class="legend"><span><i class="dot red"></i>訪問済み</span><span><i class="dot green"></i>未訪問</span></div>
-    </section>
-
-    <section id="gacha" class="screen" aria-labelledby="gacha-title">
-      <div class="screen-heading"><div><p class="eyebrow">TODAY'S BOWL</p><h2 id="gacha-title">ラーメンガチャ</h2></div></div>
-      <div class="filter-group" role="radiogroup" aria-label="ガチャ対象"><button class="filter active" data-filter="all">全店舗</button><button class="filter" data-filter="visited">訪問済み</button><button class="filter" data-filter="unvisited">未訪問</button></div>
-      <div class="gacha-machine"><span class="steam">♨</span><p class="machine-label">TODAY'S RAMEN</p><div id="slot-name" class="slot-name">お店を選ぼう</div><div id="slot-status" class="slot-status">ガチャ対象を選択してください</div></div>
-      <button id="spin-btn" class="primary large spin">🍜 ガチャを回す</button>
-      <button id="result-map-btn" class="text-button hidden">このお店を地図で見る →</button>
-      <p id="gacha-message" class="message" role="status"></p>
-    </section>
-
-    <section id="records" class="screen" aria-labelledby="records-title">
-      <div class="screen-heading"><div><p class="eyebrow">MY RECORDS</p><h2 id="records-title">記録</h2></div></div>
-      <div class="stats-grid"><article class="stat-card unvisited"><b id="record-unvisited">0</b><span>行きたいお店</span></article><article class="stat-card visited"><b id="record-year">0</b><span>今年の訪問</span></article></div>
-      <div class="list-section"><h3>訪問済み</h3><div id="visited-list" class="shop-list"></div></div>
-      <div class="list-section"><h3>行きたいお店</h3><div id="unvisited-list" class="shop-list"></div></div>
-      <div class="data-tools card"><h3>データ移行</h3><p>写真を含むすべての記録をJSONで保存・復元できます。</p><div><button id="export-btn" class="secondary">エクスポート</button><label class="secondary file-label">インポート<input id="import-input" type="file" accept="application/json,.json"></label></div></div>
-    </section>
-  </main>
-  <nav class="bottom-nav" aria-label="メインナビゲーション"><button class="nav-item active" data-nav="home"><span>⌂</span>ホーム</button><button class="nav-item" data-nav="map"><span>⌖</span>地図</button><button class="nav-item" data-nav="gacha"><span>◉</span>ガチャ</button><button class="nav-item" data-nav="records"><span>▤</span>記録</button></nav>
-
-  <dialog id="shop-dialog"><form id="shop-form" method="dialog"><div class="modal-head"><h2 id="form-title">お店を登録</h2><button type="button" class="close" data-close="shop-dialog" aria-label="閉じる">×</button></div><input id="shop-id" type="hidden"><input id="shop-lat" type="hidden"><input id="shop-lng" type="hidden"><label>店名 <input id="shop-name" required maxlength="80" placeholder="例：らぁ麺 〇〇"></label><fieldset><legend>ステータス</legend><div class="status-choice"><label><input type="radio" name="status" value="unvisited" checked> 行きたい</label><label><input type="radio" name="status" value="visited"> 訪問済み</label></div></fieldset><div id="visit-fields" class="hidden"><label>訪問日 <input id="shop-date" type="date"></label><label>食べたメニュー <input id="shop-menu" maxlength="80" placeholder="例：特製醤油らぁ麺"></label></div><label>ラーメン写真 <input id="shop-photo" type="file" accept="image/*"></label><img id="photo-preview" class="photo-preview hidden" alt="選択した写真のプレビュー"><p id="position-note" class="position-note">地図をタップして位置を選択してください。</p><p id="form-error" class="form-error" role="alert"></p><button class="primary large" type="submit">保存する</button></form></dialog>
-  <dialog id="detail-dialog"><div class="modal-head"><h2 id="detail-name"></h2><button class="close" data-close="detail-dialog" aria-label="閉じる">×</button></div><img id="detail-photo" class="detail-photo hidden" alt="ラーメン写真"><div id="detail-content"></div><div class="modal-actions"><button id="convert-btn" class="primary hidden">訪問済みにする</button><button id="edit-btn" class="secondary">編集</button><button id="delete-btn" class="danger">削除</button></div></dialog>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="app.js"></script>
 </body>
 </html>
